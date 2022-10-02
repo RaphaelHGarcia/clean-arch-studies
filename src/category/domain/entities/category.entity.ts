@@ -1,4 +1,5 @@
-import { v4 as uuidv4 } from 'uuid'
+import { Entity } from '../../../@seedworker/domain/entity/entity'
+import UniqueEntityId from '../../../@seedworker/domain/value-objects/unique-entity-id.vo'
 
 export type CategoryEntityProps = {
   name: string
@@ -7,14 +8,14 @@ export type CategoryEntityProps = {
   created_at?: Date
 }
 
-
-export class CategoryEntity {
+export class CategoryEntity extends Entity<CategoryEntityProps> {
+  public readonly id: UniqueEntityId
 
   constructor(
     public readonly props: CategoryEntityProps,
-    public id?: string
+    id?: UniqueEntityId
   ) {
-    this.id = id || uuidv4()
+    super(props, id)
     this.description = this.props.description
     this.props.is_active = this.is_active ?? true
     this.props.created_at = this.created_at ?? new Date()
@@ -35,5 +36,4 @@ export class CategoryEntity {
   }
 
   get created_at () { return this.props.created_at }
-
 }

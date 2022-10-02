@@ -1,5 +1,4 @@
 import { omit } from 'lodash'
-import { validate as uuidValidate } from 'uuid'
 import { CategoryEntity } from './category.entity'
 
 describe('Category Unit Tests', () => {
@@ -36,7 +35,6 @@ describe('Category Unit Tests', () => {
   test('id field', () => {
     let category = new CategoryEntity({ name: 'Movie' })
     expect(category.id).not.toBeNull()
-    expect(uuidValidate(category.id)).toBeTruthy()
   })
 
   test('getter of name prop', () => {
