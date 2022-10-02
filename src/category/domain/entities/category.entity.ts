@@ -9,8 +9,6 @@ export type CategoryEntityProps = {
 }
 
 export class CategoryEntity extends Entity<CategoryEntityProps> {
-  public readonly id: UniqueEntityId
-
   constructor(
     public readonly props: CategoryEntityProps,
     id?: UniqueEntityId
@@ -22,6 +20,14 @@ export class CategoryEntity extends Entity<CategoryEntityProps> {
   }
 
   get name () { return this.props.name }
+
+  private set name (value: string) {
+    if (!value || value.length === 0) {
+      throw new Error('Field name is required')
+    }
+
+    this.props.name = value
+  }
 
   get description () { return this.props.description }
 
@@ -36,4 +42,17 @@ export class CategoryEntity extends Entity<CategoryEntityProps> {
   }
 
   get created_at () { return this.props.created_at }
+
+  update (name: string, description: string) {
+    this.name = name
+    this.description = description
+  }
+
+  activate () {
+    this.is_active = true
+  }
+  
+  deactivate () {
+    this.is_active = false
+  }
 }

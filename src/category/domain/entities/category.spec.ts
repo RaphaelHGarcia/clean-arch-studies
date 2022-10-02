@@ -78,4 +78,35 @@ describe('Category Unit Tests', () => {
     category = new CategoryEntity({ name: 'Movie', created_at })
     expect(category.created_at).toBe(created_at)
   })
+
+  test('update name and description of category', () => {
+    let category = new CategoryEntity({ name: 'Movie', description: 'desc' })
+    category.update('Movie 1', 'updated desc')
+
+    expect(category.name).toBe('Movie 1')
+    expect(category.description).toBe('updated desc')
+
+    expect(() => {
+      category.update('', 'updated desc')
+    }).toThrow('Field name is required')
+    
+    expect(() => {
+      category.update(null, 'updated desc')
+    }).toThrow('Field name is required')
+    
+    expect(() => {
+      category.update(undefined, 'updated desc')
+    }).toThrow('Field name is required')
+  })
+
+  test('activate/deactivate category', () => {
+    const category = new CategoryEntity({ name: 'Movie' })
+    expect(category.is_active).toBeTruthy()
+
+    category.deactivate()
+    expect(category.is_active).toBeFalsy()
+    
+    category.activate()
+    expect(category.is_active).toBeTruthy()
+  })
 })
